@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Output delle ricerche — sono i tuoi risultati, non codice
+risultati.html
+risultati.json
+*-risultati.html
+*-risultati.json
+
+# Il tuo profilo personale, se lo tieni qui
+mio-profilo.json
