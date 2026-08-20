@@ -144,7 +144,8 @@ def render(data: list[dict], profile: dict) -> str:
     )
 
 
-HTML_TEMPLATE = """<title>Radar Remoto</title>
+HTML_TEMPLATE = """<meta charset="utf-8">
+<title>Radar Lavoro Remoto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -240,7 +241,7 @@ HTML_TEMPLATE = """<title>Radar Remoto</title>
   @media (max-width:640px){{ .stats{{grid-template-columns:repeat(2,1fr);}} .card{{grid-template-columns:1fr;}} .card .tier-dot{{display:none;}} .search{{margin-left:0;width:100%;}} .search input{{width:100%;}} }}
 </style>
 <div class="wrap">
-  <div class="eyebrow">radar-remoto</div>
+  <div class="eyebrow">radar-lavoro-remoto</div>
   <h1>I tuoi risultati</h1>
   <p class="subtitle">{subtitle}</p>
   <p class="profile-note">{profile_note}</p>
