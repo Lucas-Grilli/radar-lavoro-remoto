@@ -1,36 +1,51 @@
-# Radar Remoto
+<h1 align="center">Radar Lavoro Remoto</h1>
 
-Cerca lavoro **da remoto all'estero** su più bacheche insieme, scarta il rumore
-e ti dice quali annunci sono davvero remoti — perché molti non lo sono, anche
-quando il filtro della bacheca dice di sì.
+<p align="center">
+  <strong>Cerca lavoro da remoto all'estero, e verifica quali annunci lo sono davvero.</strong><br>
+  Per chi vive in Italia e vuole un impiego fuori dal paese senza trasferirsi: raccoglie gli annunci da più bacheche insieme, li filtra sul ruolo che cerchi, e apre ogni annuncio buono per controllare se il "remoto" dichiarato è vero.
+</p>
 
-Scrivi chi sei in un file, lanci un comando, ti si apre una pagina con i
-risultati ordinati per pertinenza e link diretti agli annunci.
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2563eb.svg" alt="Licenza MIT"></a>
+  <img src="https://img.shields.io/badge/status-v0.2-2563eb.svg" alt="v0.2">
+</p>
 
----
+<p align="center">
+  <a href="#per-chi-è">Per chi è</a> ·
+  <a href="#come-funziona">Come funziona</a> ·
+  <a href="#come-si-usa">Come si usa</a> ·
+  <a href="#limiti">Limiti</a> ·
+  <a href="#come-è-fatto">Come è fatto</a>
+</p>
 
-## Il problema che risolve
-
-Cercare lavoro remoto all'estero significa aprire quattro siti, ripetere la
-stessa ricerca su ognuno, e leggere centinaia di annunci per scoprire che:
-
-- **Il filtro "remoto" mente.** Nei test, su 72 annunci trovati con il filtro
-  "solo remoto" di LinkedIn attivo, **solo 12 confermavano il remoto** nel testo
-  dell'annuncio. Uno diceva letteralmente *"Fully on-site — Barcelona or
-  Valencia"*. Questo strumento apre ogni annuncio e te lo dice.
-- **Le ricerche per parola chiave pescano a caso.** Cercando "formatore AI"
-  arrivano medici e istruttori di sicurezza (matchano "formatore") e ingegneri
-  ML (matchano "AI"). Qui il filtro richiede che il **ruolo** sia nel titolo,
-  e le tue competenze vengono cercate nel **testo** dell'annuncio, dove
-  stanno davvero.
-- **"Cerca in tutto il mondo" non cerca in tutto il mondo.** Su LinkedIn la
-  ricerca "Worldwide" restituisce un insieme di annunci quasi **separato** da
-  quello che ottieni cercando regione per regione (nei test: 2 annunci in comune
-  su 190). Questo strumento interroga sempre ogni regione esplicitamente.
+Cercare lavoro remoto all'estero oggi vuol dire aprire più bacheche, ripetere la stessa ricerca su ognuna, e leggere centinaia di annunci per scoprire alla fine che molti non c'entrano col ruolo cercato — o non sono davvero remoti come dichiarano.
 
 ---
 
-## Uso
+## Per chi è
+
+È per te, se:
+
+- Vivi in Italia e cerchi un lavoro da remoto in un'azienda straniera.
+- Sei a tuo agio ad aprire un terminale e lanciare due comandi — non è un sito con un bottone.
+- Preferisci una pagina tua con tutti gli annunci, invece di quattro schede diverse del browser.
+
+Se cerchi lavoro in Italia, o preferisci uno strumento senza installare niente, oggi non è lo strumento giusto per te.
+
+---
+
+## Come funziona
+
+Quattro domande — che ruoli cerchi, dove, che competenze, che livello — poi il programma:
+
+1. **Cerca su LinkedIn e Indeed, regione per regione.** Mai una ricerca "in tutto il mondo" generica: su LinkedIn restituisce un insieme di annunci quasi separato da quello che si ottiene cercando regione per regione — verificato, 2 annunci in comune su 190 tra i due approcci.
+2. **Filtra sul ruolo che hai scritto, cercato nel titolo.** Non per parola sciolta: cercare "formatore AI" pesca anche medici e ingegneri ML, perché "formatore" e "AI" matchano da soli. Qui serve il ruolo intero.
+3. **Apre ogni annuncio pertinente e ne legge il testo**, per dire se è davvero remoto. Il filtro "solo remoto" delle bacheche non è affidabile — verificato, con quel filtro attivo solo 12 annunci su 72 confermavano il remoto nel testo dell'annuncio.
+4. **Scrive una pagina HTML** con tutto, filtrabile per pertinenza, regione, bacheca e stato di verifica.
+
+---
+
+## Come si usa
 
 Serve **Python 3.10 o superiore**. Due comandi:
 
@@ -39,20 +54,15 @@ pip install -r requirements.txt
 python -m engine.run
 ```
 
-Il programma ti fa quattro domande (che ruoli cerchi, dove, che livello…), poi
-parte. A fine ricerca ti dice quale file aprire nel browser.
+Il programma fa le domande, poi parte. A fine ricerca dice quale file aprire nel browser.
 
-Non devi preparare nessun file: le risposte vengono salvate in
-`mio-profilo.json`, così la volta dopo puoi rilanciare la stessa ricerca senza
-ridigitare nulla:
+Non serve preparare nessun file: le risposte vengono salvate in `mio-profilo.json`, così la volta dopo si può rilanciare la stessa ricerca senza ridigitare nulla:
 
 ```bash
 python -m engine.run --profile mio-profilo.json
 ```
 
-La ricerca richiede qualche minuto: interroga più bacheche, poi apre uno per
-uno gli annunci migliori per verificare il remoto. È lenta di proposito — fa
-le pause necessarie a non farsi bloccare dalle bacheche.
+La ricerca richiede qualche minuto: interroga più bacheche, poi apre uno per uno gli annunci migliori per verificare il remoto. È lenta di proposito — fa le pause necessarie a non farsi bloccare.
 
 ### Opzioni
 
@@ -60,74 +70,54 @@ le pause necessarie a non farsi bloccare dalle bacheche.
 |---|---|
 | `--giorni 7` | Cerca solo negli ultimi 7 giorni (default: 30) |
 | `--profile file.json` | Riusa un profilo salvato invece di rispondere alle domande |
-| `--out pagina.html` | Scegli dove scrivere la pagina |
-| `--no-verify` | Salta la verifica del remoto: molto più veloce, ma non saprai quali annunci sono davvero remoti |
+| `--out pagina.html` | Sceglie dove scrivere la pagina |
+| `--no-verify` | Salta la verifica del remoto: molto più veloce, ma non si sa quali annunci sono davvero remoti |
 
----
-
-## I campi del profilo
+### I campi del profilo
 
 | Campo | Obbligatorio | Cosa farne |
 |---|---|---|
-| `ruoli` | **Sì** | I titoli che cerchi, **in inglese** (le bacheche estere sono in inglese). È l'unico campo che decide se un annuncio è "in linea". |
+| `ruoli` | **Sì** | I titoli da cercare, **in inglese** (le bacheche estere sono in inglese). L'unico campo che decide se un annuncio è "in linea". |
 | `zone` | **Sì** | Dove cercare: `USA`, `Canada`, `UK & Irlanda`, `Europa`, `Asia-Pacifico`, oppure `Tutto il mondo` per tutte insieme. |
-| `competenze` | No | I tuoi strumenti/tecnologie. Non escludono nessun annuncio: servono a marcare quelli che le nominano davvero, come conferma in più. |
-| `livello` | No | `junior`, `mid`, `senior` o `qualsiasi` (default). Scarta gli annunci che dichiarano un livello **diverso** dal tuo; quelli che non lo dichiarano restano. |
+| `competenze` | No | Strumenti/tecnologie. Non escludono nessun annuncio: marcano quelli che le nominano davvero, come conferma in più. |
+| `livello` | No | `junior`, `mid`, `senior` o `qualsiasi` (default). Scarta gli annunci che dichiarano un livello diverso; quelli che non lo dichiarano restano. |
 | `esclusioni` | No | Parole che, se compaiono nel titolo, scartano l'annuncio. |
 
----
-
-## Come legge i risultati la pagina
+### Come leggere i risultati
 
 Ogni annuncio finisce in una di tre fasce:
 
-- **In linea** — il ruolo che cerchi è nel titolo. Sono questi che devi
-  guardare, ed è la vista che si apre di default.
-- **Generico** — la ricerca l'ha pescato ma il titolo non corrisponde al ruolo.
-  Ogni tanto c'è qualcosa di buono, sfoglialo se hai tempo.
-- **Fuori target** — scartato da una tua esclusione o dal livello.
+- **In linea** — il ruolo cercato è nel titolo. Sono questi da guardare, ed è la vista che si apre di default.
+- **Generico** — pescato dalla ricerca ma il titolo non corrisponde al ruolo. Ogni tanto c'è qualcosa di buono.
+- **Fuori target** — scartato da un'esclusione o dal livello.
 
-Sugli annunci "in linea" trovi anche:
+Sugli annunci "in linea":
 
 | Etichetta | Significato |
 |---|---|
 | `remote confermato` | L'annuncio dice esplicitamente che è remoto |
-| `SOSPETTO on-site/hybrid` | Nomina ufficio o ibrido: **probabilmente non è remoto** nonostante il filtro |
+| `SOSPETTO on-site/hybrid` | Nomina ufficio o ibrido: probabilmente non è remoto nonostante il filtro |
 | `ambiguo` | Il testo non lo dice in nessuna direzione — va aperto e letto |
-| `competenze confermate` | Le tue competenze compaiono nel testo dell'annuncio |
+| `competenze confermate` | Le competenze indicate compaiono nel testo dell'annuncio |
 
-I filtri in cima alla pagina (pertinenza, verifica remoto, regione, bacheca)
-si combinano tra loro. La pagina è un file HTML statico: funziona offline,
-puoi salvarlo o mandarlo a qualcuno.
+La pagina è un file HTML statico: funziona offline, si può salvare o mandare a qualcuno.
 
 ---
 
-## Limiti — leggili prima di lamentarti
+## Limiti
 
-- **Le bacheche bloccano chi cerca troppo.** Se lanci molte ricerche di fila,
-  LinkedIn inizia a rifiutare le richieste (errore 429). Aspetta, o distanzia
-  le ricerche. Non c'è modo di aggirarlo senza pagare un servizio proxy.
-- **Glassdoor e ZipRecruiter non sono inclusi.** Sono stati provati: rispondono
-  "403 Forbidden" a ogni richiesta senza un proxy a pagamento. Meglio non
-  includerli che farti aspettare per niente.
-- **Indeed è interrogato solo su USA e UK**, dove ha dato risultati. Altrove
-  non ha prodotto nulla di utile nei test.
-- **Le ricerche sono in inglese.** È pensato per cercare all'estero: scrivi
-  ruoli e competenze in inglese.
-- **Lo stipendio quasi non c'è.** Poche bacheche lo dichiarano — nei test, 13
-  annunci su 193. Quando c'è lo vedi, quando manca non c'è modo di saperlo
-  senza aprire l'annuncio.
-- **La verifica del remoto legge il testo, non capisce il contesto.** Un
-  annuncio che dice "remote-first, but we meet in the office monthly" risulta
-  "remote confermato". Il badge riduce il lavoro di lettura, non lo elimina.
+- **Le bacheche bloccano chi cerca troppo.** Ricerche ravvicinate fanno rifiutare le richieste da LinkedIn (errore 429). Non c'è modo di aggirarlo senza un servizio proxy a pagamento.
+- **Glassdoor e ZipRecruiter non sono inclusi.** Provati: rispondono "403 Forbidden" a ogni richiesta senza un proxy a pagamento.
+- **Indeed è interrogato solo su USA e UK**, le uniche zone dove ha dato risultati utili.
+- **Le ricerche sono in inglese.** È pensato per cercare all'estero: ruoli e competenze vanno scritti in inglese.
+- **Lo stipendio compare raramente.** Poche bacheche lo dichiarano. Quando manca, non c'è modo di saperlo senza aprire l'annuncio.
+- **La verifica del remoto legge il testo, non capisce il contesto.** Un annuncio che dice "remote-first, but we meet in the office monthly" risulta "remote confermato". Il badge riduce il lavoro di lettura, non lo elimina.
 
 ---
 
 ## Come è fatto
 
-Il lavoro di raccolta lo fa [JobSpy](https://github.com/speedyapply/JobSpy),
-libreria open source che interroga le bacheche. Il resto — profilo, filtri,
-verifica del remoto, pagina — è in `engine/`, un file per passaggio:
+Il lavoro di raccolta lo fa [JobSpy](https://github.com/speedyapply/JobSpy), libreria open source che interroga le bacheche. Il resto — profilo, filtri, verifica del remoto, pagina — è in `engine/`, un file per passaggio:
 
 | File | Cosa fa |
 |---|---|
@@ -141,6 +131,15 @@ verifica del remoto, pagina — è in `engine/`, un file per passaggio:
 | `run.py` | Mette tutto in fila |
 
 Note tecniche e trappole incontrate costruendolo: [engine/README.md](engine/README.md).
+
+---
+
+## Sviluppi futuri
+
+Idee in valutazione, non promesse:
+
+- Glassdoor e ZipRecruiter dietro un servizio proxy, se il costo si giustifica con l'uso reale.
+- Una versione online, se lo scraping regge da un IP non residenziale — da verificare, oggi non testato.
 
 ---
 
