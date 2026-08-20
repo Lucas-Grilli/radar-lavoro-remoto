@@ -22,6 +22,12 @@ Cercare lavoro remoto all'estero oggi vuol dire aprire più bacheche, ripetere l
 
 ---
 
+<p align="center">
+  <img src="assets/screenshot.png" alt="La pagina dei risultati: fasce di pertinenza, verifica del remoto, filtri per regione e bacheca, un annuncio per riga con link diretto" width="100%">
+</p>
+
+---
+
 ## Per chi è
 
 È per te, se:
