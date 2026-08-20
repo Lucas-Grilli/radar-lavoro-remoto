@@ -56,7 +56,7 @@ def chiedi_profilo() -> Profile:
     print("=" * 66)
     print("  RADAR REMOTO — cerca lavoro da remoto all'estero")
     print("=" * 66)
-    print("\nCinque domande e parte la ricerca.")
+    print("\nQuattro domande e parte la ricerca.")
     print("Scrivi ruoli e competenze IN INGLESE: le bacheche estere sono in inglese.\n")
 
     print("Un annuncio è \"in linea\" se uno di questi titoli compare nel suo titolo.")
@@ -88,17 +88,10 @@ def chiedi_profilo() -> Profile:
         "   > "
     )
 
-    altro = input(
-        "\n5. Altro che dovrei sapere? (in italiano, invio per saltare)\n"
-        "   es: preferirei evitare le grandi aziende\n"
-        "   > "
-    ).strip()
-
     return Profile(
         ruoli=ruoli,
         competenze=competenze,
         livello=livello,
         zone=zone,
         esclusioni=esclusioni,
-        altro=altro,
     )

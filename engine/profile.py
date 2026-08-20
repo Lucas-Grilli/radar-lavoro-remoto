@@ -54,7 +54,6 @@ class Profile:
     competenze: list[str] = field(default_factory=list)   # opzionale
     livello: str = "qualsiasi"             # junior|mid|senior|qualsiasi
     esclusioni: list[str] = field(default_factory=list)   # opzionale
-    altro: str = ""                        # opzionale — smistato da LLM, vedi llm_dispatch.py
 
     def __post_init__(self):
         if not self.ruoli:

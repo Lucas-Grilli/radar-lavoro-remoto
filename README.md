@@ -1,14 +1,10 @@
-# Radar Lavoro Remoto
-
-![licenza MIT](https://img.shields.io/badge/licenza-MIT-black)
-![stato: funzionante](https://img.shields.io/badge/stato-funzionante-brightgreen)
-![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+# Radar Remoto
 
 Cerca lavoro **da remoto all'estero** su più bacheche insieme, scarta il rumore
 e ti dice quali annunci sono davvero remoti — perché molti non lo sono, anche
 quando il filtro della bacheca dice di sì.
 
-Rispondi a cinque domande, aspetti qualche minuto, ti si apre una pagina con i
+Scrivi chi sei in un file, lanci un comando, ti si apre una pagina con i
 risultati ordinati per pertinenza e link diretti agli annunci.
 
 ---
@@ -43,7 +39,7 @@ pip install -r requirements.txt
 python -m engine.run
 ```
 
-Il programma ti fa cinque domande (che ruoli cerchi, dove, che livello…), poi
+Il programma ti fa quattro domande (che ruoli cerchi, dove, che livello…), poi
 parte. A fine ricerca ti dice quale file aprire nel browser.
 
 Non devi preparare nessun file: le risposte vengono salvate in
@@ -78,24 +74,6 @@ le pause necessarie a non farsi bloccare dalle bacheche.
 | `competenze` | No | I tuoi strumenti/tecnologie. Non escludono nessun annuncio: servono a marcare quelli che le nominano davvero, come conferma in più. |
 | `livello` | No | `junior`, `mid`, `senior` o `qualsiasi` (default). Scarta gli annunci che dichiarano un livello **diverso** dal tuo; quelli che non lo dichiarano restano. |
 | `esclusioni` | No | Parole che, se compaiono nel titolo, scartano l'annuncio. |
-| `altro` | No | Testo libero, in italiano. Viene letto da un modello AI che lo smista sugli altri campi. **Richiede una chiave API Anthropic** (sotto). Senza chiave il campo viene ignorato con un avviso, e tutto il resto funziona. |
-
-### Il campo "altro da sapere"
-
-È l'unica parte che costa qualcosa, ed è opzionale. Costa **una chiamata per
-ricerca** (non una per annuncio): frazioni di centesimo.
-
-Per usarlo serve una chiave da [console.anthropic.com](https://console.anthropic.com):
-
-```bash
-# Windows
-set ANTHROPIC_API_KEY=sk-ant-...
-
-# Linux / macOS
-export ANTHROPIC_API_KEY=sk-ant-...
-```
-
-Se lasci il campo vuoto, non parte nessuna chiamata e non spendi nulla.
 
 ---
 
@@ -159,7 +137,6 @@ verifica del remoto, pagina — è in `engine/`, un file per passaggio:
 | `search.py` | Interroga le bacheche, una regione alla volta |
 | `filter.py` | Assegna la fascia a ogni annuncio |
 | `verify_remote.py` | Apre gli annunci in linea e verifica remoto e competenze |
-| `llm_dispatch.py` | Smista il campo "altro da sapere" |
 | `render_dashboard.py` | Genera la pagina HTML |
 | `run.py` | Mette tutto in fila |
 

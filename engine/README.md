@@ -7,13 +7,12 @@ Note tecniche per chi vuole modificarlo. Per usarlo basta il
 
 | File | Cosa fa |
 |---|---|
-| `ask.py` | Le cinque domande iniziali |
+| `ask.py` | Le quattro domande iniziali |
 | `profile.py` | Schema del profilo + mappa delle regioni verso le bacheche |
 | `build_query.py` | Profilo → termini di ricerca larghi + matcher di filtro |
 | `search.py` | Chiama JobSpy su ogni regione esplicita richiesta |
 | `filter.py` | Assegna la fascia (In linea / Generico / Fuori target) |
 | `verify_remote.py` | Apre gli annunci in linea: verifica remoto e competenze |
-| `llm_dispatch.py` | Smista il campo "altro da sapere" (opzionale, richiede una chiave API) |
 | `render_dashboard.py` | Genera la pagina HTML statica |
 | `run.py` | Orchestratore + interfaccia a riga di comando |
 

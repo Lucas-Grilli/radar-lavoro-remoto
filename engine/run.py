@@ -5,9 +5,8 @@
 Produce due file accanto al profilo: `risultati.json` (i dati grezzi) e
 `risultati.html` (la pagina da aprire nel browser).
 
-Pipeline: profilo -> (LLM sul campo "altro", se compilato) -> ricerca per
-regione esplicita -> filtro sul ruolo -> verifica remoto e competenze sugli
-annunci in linea -> pagina HTML.
+Pipeline: profilo -> ricerca per regione esplicita -> filtro sul ruolo ->
+verifica remoto e competenze sugli annunci in linea -> pagina HTML.
 """
 
 import argparse
@@ -28,7 +27,6 @@ for _stream in (sys.stdout, sys.stderr):
 
 from .build_query import build_filters
 from .filter import apply_filters
-from .llm_dispatch import dispatch_altro, merge_altro
 from .profile import ALL_REGIONS, Profile
 from .render_dashboard import render
 from .search import run_search
@@ -36,27 +34,6 @@ from .verify_remote import verify_remote_status
 
 
 def search_for_profile(profile: Profile, hours_old: int = 720, verify: bool = True):
-    if profile.altro.strip():
-        try:
-            altro_result = dispatch_altro(profile.altro)
-            merge_altro(profile, altro_result)
-            print("Campo 'altro da sapere' interpretato:")
-            for campo in ("ruoli_extra", "competenze_extra", "esclusioni_extra"):
-                if altro_result.get(campo):
-                    print(f"  + {campo.replace('_extra', '')}: {', '.join(altro_result[campo])}")
-            if altro_result.get("livello", "qualsiasi") != "qualsiasi":
-                print(f"  + livello: {altro_result['livello']}")
-            if altro_result.get("nota_ignorata"):
-                print(f"  ! non utilizzato: {altro_result['nota_ignorata']}")
-            print()
-        except RuntimeError as e:
-            print("=" * 70, file=sys.stderr)
-            print("ATTENZIONE — il campo 'altro da sapere' è stato IGNORATO.", file=sys.stderr)
-            print(f"Motivo: {e}", file=sys.stderr)
-            print("La ricerca prosegue con gli altri campi del profilo.", file=sys.stderr)
-            print("=" * 70, file=sys.stderr)
-            print()
-
     filters = build_filters(profile)
 
     print(f"Cerco: {', '.join(profile.ruoli)}")
@@ -88,7 +65,7 @@ def _load_profile(path: str) -> Profile:
     except TypeError as e:
         raise SystemExit(
             f"Il profilo {path} ha campi non validi: {e}\n"
-            "Campi ammessi: ruoli, competenze, livello, zone, esclusioni, altro."
+            "Campi ammessi: ruoli, competenze, livello, zone, esclusioni."
         )
 
 
@@ -112,7 +89,7 @@ def main():
             json.dumps({
                 "ruoli": profile.ruoli, "competenze": profile.competenze,
                 "livello": profile.livello, "zone": profile.zone,
-                "esclusioni": profile.esclusioni, "altro": profile.altro,
+                "esclusioni": profile.esclusioni,
             }, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
@@ -122,7 +99,7 @@ def main():
     profile_dict = {
         "ruoli": profile.ruoli, "competenze": profile.competenze,
         "livello": profile.livello, "zone": profile.zone,
-        "esclusioni": profile.esclusioni, "altro": profile.altro,
+        "esclusioni": profile.esclusioni,
     }
 
     df = search_for_profile(profile, hours_old=args.giorni * 24, verify=not args.no_verify)

@@ -1,6 +1,2 @@
 python-jobspy
 pandas
-
-# Serve solo se compili il campo "altro da sapere" del profilo.
-# Senza, tutto il resto funziona lo stesso.
-anthropic
